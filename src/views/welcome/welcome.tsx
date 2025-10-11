@@ -1,9 +1,13 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Button } from '../../components/button/button';
+import { useWelcomeViewService } from './welcomeViewService';
 
-export default function InitialScreen() {
+export default function Welcome() {
+
+  const { sendToLogin, sendToRegister } = useWelcomeViewService();
+
   return (
     <SafeAreaView
       style={{
@@ -27,7 +31,7 @@ export default function InitialScreen() {
             color: '#1C1C1E',
           }}
         >
-          Bem vindo ao
+          Bem-vindo ao
         </Text>
         <Text
           style={{
@@ -56,30 +60,24 @@ export default function InitialScreen() {
       <View
         style={{
           backgroundColor: '#0D3B66',
-          borderTopLeftRadius: 32,
-          borderTopRightRadius: 32,
+          borderTopLeftRadius: 16,
+          borderTopRightRadius: 16,
           paddingHorizontal: 24,
-          paddingVertical: 24,
+          paddingVertical: 36,
           justifyContent: 'center',
           boxShadow: '0px -2px 4px rgba(0, 0, 0, 0.1)'
         }}
       >
         <Button
-          text="Entre"
+          text="Entrar"
+          onPress={sendToLogin}
+          type="secondary"
         />
-        <Text
-          style={{
-            textAlign: 'center',
-            fontSize: 14,
-            marginTop: 16,
-            color: '#F9FAFB',
-          }}
-        >
-          Ainda não possui uma conta?
-        </Text>
-        <Button
-          text="Cadastre-se"
-        />
+        <TouchableOpacity onPress={sendToRegister} style={{ marginTop: 24, alignItems: 'center' }}>
+          <Text style={{ fontWeight: 'bold', color: '#E2E8F0'}}>Não possui uma conta? {''}
+            <Text style={{ textDecorationLine: 'underline' }}>Cadastre-se</Text>
+          </Text>
+        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );

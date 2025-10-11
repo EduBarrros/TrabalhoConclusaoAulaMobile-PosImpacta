@@ -6,12 +6,36 @@ interface ButtonProps {
   type?: 'primary' | 'secondary';
 }
 
-export const Button = ({ text, onPress, type }: ButtonProps) => {
+export const Button = ({ text, onPress, type = 'primary' }: ButtonProps) => {
+  const isPrimary = type === 'primary';
+
   return (
-    <TouchableOpacity onPress={onPress} style={{ backgroundColor: type === 'primary' ? '#F9FAFB' : '#F9FAFB', height: 48, borderRadius: 24, alignItems: 'center', justifyContent: 'center', marginTop: 16, boxShadow: type === 'primary' ? '0px 2px 4px rgba(0, 0, 0, 0.1)' : '0px 4px 8px rgba(0, 0, 0, 0.2)' }}>
-      <Text style={{ color: type === 'primary' ? '#0D3B66' : '#0D3B66', fontWeight: 'bold', fontSize: 16 }}>
+    <TouchableOpacity
+      onPress={onPress}
+      activeOpacity={0.8}
+      style={{
+        height: 48,
+        borderRadius: 12,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: 16,
+        backgroundColor: isPrimary ? '#0D3B66' : '#E2E8F0',
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.15,
+        shadowRadius: 4,
+        elevation: 2,
+      }}
+    >
+      <Text
+        style={{
+          color: isPrimary ? '#F9FAFB' : '#0D3B66',
+          fontWeight: 'bold',
+          fontSize: 16,
+        }}
+      >
         {text}
       </Text>
     </TouchableOpacity>
   );
-}
+};

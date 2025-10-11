@@ -1,13 +1,24 @@
-import { Text } from "react-native";
+import {TextInput} from 'react-native';
 
 interface TextInputProps {
-
+  placeholder?: string;
+  value?: string;
+  onChangeText?: (text: string) => void;
 }
 
-export const TextInput = ({  }: TextInputProps) => {
+export const TextField = ({ placeholder, value, onChangeText  }: TextInputProps) => {
   return (
-    <Text>
-        TextInput Component
-    </Text>
+    <TextInput 
+    placeholderTextColor="#94A3B8" 
+    placeholder={placeholder}
+    value={value}
+    onChangeText={onChangeText}
+    style={{ 
+      color: '#0D3B66',
+      padding: 16, 
+      backgroundColor: '#F1F5F9', 
+      height: 56, 
+      borderRadius: 12, 
+      boxShadow: '0px 2px 8px rgba(0, 0, 0, 0.1)'}}/>
   );
 }

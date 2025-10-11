@@ -1,7 +1,6 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { Text } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Button } from '../../components/button/button';
 
 export default function Login() {
   return (
@@ -11,76 +10,9 @@ export default function Login() {
         backgroundColor: '#F9FAFB',
       }}
     >
-      <View
-        style={{
-          flex: 1.2,
-          justifyContent: 'center',
-          alignItems: 'center',
-          paddingHorizontal: 16,
-        }}
-      >
-        <Text
-          style={{
-            fontSize: 24,
-            fontWeight: 'bold',
-            textAlign: 'center',
-            color: '#1C1C1E',
-          }}
-        >
-          Bem vindo ao
-        </Text>
-        <Text
-          style={{
-            fontSize: 48,
-            fontWeight: 'bold',
-            color: '#1E6091',
-            textAlign: 'center',
-            marginVertical: 8,
-          }}
-        >
-          GateKeeper
-        </Text>
-        <Text
-          style={{
-            textAlign: 'center',
-            marginTop: 32,
-            fontSize: 16,
-            lineHeight: 22,
-            color: '#1C1C1E',
-            paddingHorizontal: 8,
-          }}
-        >
-          Seu controle de acessos seguro e confiável.
-        </Text>
-      </View>
-      <View
-        style={{
-          backgroundColor: '#0D3B66',
-          borderTopLeftRadius: 32,
-          borderTopRightRadius: 32,
-          paddingHorizontal: 24,
-          paddingVertical: 24,
-          justifyContent: 'center',
-          boxShadow: '0px -2px 4px rgba(0, 0, 0, 0.1)'
-        }}
-      >
-        <Button
-          text="Entre"
-        />
-        <Text
-          style={{
-            textAlign: 'center',
-            fontSize: 14,
-            marginTop: 16,
-            color: '#F9FAFB',
-          }}
-        >
-          Ainda não possui uma conta?
-        </Text>
-        <Button
-          text="Cadastre-se"
-        />
-      </View>
+      <Text>
+        Login Screen
+      </Text>
     </SafeAreaView>
   );
 }
