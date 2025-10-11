@@ -3,10 +3,10 @@ import Login from '../views/login/login';
 
 const Stack = createStackNavigator();
 
-export function MyStack() {
+export function AuthRoutes() {
   return (
-    <Stack.Navigator initialRouteName='Login'>
-      <Stack.Screen name="Login" component={Login} />
+    <Stack.Navigator>
+      <Stack.Screen name="Login" component={Login} options={{headerShown: false}}/>
     </Stack.Navigator>
   );
 }

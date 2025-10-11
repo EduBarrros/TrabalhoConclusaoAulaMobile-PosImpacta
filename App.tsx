@@ -1,10 +1,15 @@
 import { NavigationContainer } from "@react-navigation/native";
-import { MyStack } from "./src/navigation/routes";
+import { StatusBar } from 'react-native';
+import { RootRoutes } from "./src/navigation/rootRoutes";
 
 export default function App() {
   return (
+
     <NavigationContainer>
-      <MyStack />
+      <StatusBar
+        barStyle="dark-content"
+      />
+      <RootRoutes />
     </NavigationContainer>
   );
 }

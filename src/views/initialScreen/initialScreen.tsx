@@ -3,7 +3,7 @@ import { Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Button } from '../../components/button/button';
 
-export default function Login() {
+export default function InitialScreen() {
   return (
     <SafeAreaView
       style={{
