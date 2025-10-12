@@ -1,6 +1,6 @@
 import { CommonActions, useNavigation } from "@react-navigation/native";
 
-export const useLoginViewService = () => {
+export const useHomeViewService = () => {
 
     const navigation = useNavigation();
 

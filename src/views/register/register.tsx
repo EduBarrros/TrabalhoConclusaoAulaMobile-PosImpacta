@@ -29,13 +29,11 @@ export default function Register() {
                 <TextField placeholder='Email' />
                 <TextField placeholder='Senha' />
                 <Button text="Cadastrar" />
-                <Text style={{ textAlign: 'center', color: '#6B7280' }}>
-                    <TouchableOpacity onPress={sendToLogin}>
-                        <Text style={{ color: '#1E6091', fontWeight: 'bold' }}>Já possui uma conta? {''}
-                            <Text style={{ textDecorationLine: 'underline' }}>Entrar</Text>
-                        </Text>
-                    </TouchableOpacity>
-                </Text>
+                <TouchableOpacity style={{ alignItems: 'center' }} onPress={sendToLogin}>
+                    <Text style={{ color: '#1E6091', fontWeight: 'bold' }}>Já possui uma conta? {''}
+                        <Text style={{ textDecorationLine: 'underline' }}>Entrar</Text>
+                    </Text>
+                </TouchableOpacity>
                 <Text style={{ textAlign: 'center', marginTop: 16, color: '#6B7280' }}>
                     Ao se cadastrar, você concorda com nossos Termos de Serviço e Política de Privacidade.
                 </Text>
