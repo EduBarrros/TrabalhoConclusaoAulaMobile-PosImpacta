@@ -7,7 +7,7 @@ import { useRegisterViewService } from './registerViewService';
 
 export default function Register() {
 
-    const { sendToLogin } = useRegisterViewService();
+    const ViewService = useRegisterViewService();
 
     return (
         <SafeAreaView
@@ -25,11 +25,11 @@ export default function Register() {
                 </Text>
             </View>
             <View style={{ flex: 1, paddingHorizontal: 24, gap: 24 }}>
-                <TextField placeholder='Nome completo' />
-                <TextField placeholder='Email' />
-                <TextField placeholder='Senha' />
-                <Button text="Cadastrar" />
-                <TouchableOpacity style={{ alignItems: 'center' }} onPress={sendToLogin}>
+                <TextField placeholder='Nome completo' value={ViewService.userName} onChangeText={ViewService.setUserName}/>
+                <TextField placeholder='Email' value={ViewService.email} onChangeText={ViewService.setEmail}/>
+                <TextField placeholder='Senha' value={ViewService.password} onChangeText={ViewService.setPassword} secureTextEntry/>
+                <Button text="Cadastrar" onPress={ViewService.registerUser}/>
+                <TouchableOpacity style={{ alignItems: 'center' }} onPress={ViewService.sendToLogin}>
                     <Text style={{ color: '#1E6091', fontWeight: 'bold' }}>Já possui uma conta? {''}
                         <Text style={{ textDecorationLine: 'underline' }}>Entrar</Text>
                     </Text>

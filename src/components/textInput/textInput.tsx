@@ -4,14 +4,16 @@ interface TextInputProps {
   placeholder?: string;
   value?: string;
   onChangeText?: (text: string) => void;
+  secureTextEntry?: boolean;
 }
 
-export const TextField = ({ placeholder, value, onChangeText  }: TextInputProps) => {
+export const TextField = ({ placeholder, value, onChangeText, secureTextEntry=false}: TextInputProps) => {
   return (
     <TextInput 
     placeholderTextColor="#94A3B8" 
     placeholder={placeholder}
     value={value}
+    secureTextEntry={secureTextEntry}
     onChangeText={onChangeText}
     style={{ 
       color: '#0D3B66',

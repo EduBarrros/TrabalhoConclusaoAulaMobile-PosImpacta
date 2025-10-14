@@ -25,6 +25,9 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "ENCRYPTION_KEY": "process.env.ENCRYPTION_KEY"
     }
   }
 }

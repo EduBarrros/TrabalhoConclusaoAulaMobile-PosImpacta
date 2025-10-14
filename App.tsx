@@ -4,12 +4,11 @@ import { RootRoutes } from "./src/navigation/rootRoutes";
 
 export default function App() {
   return (
-
     <NavigationContainer>
+      <RootRoutes />
       <StatusBar
         barStyle="dark-content"
       />
-      <RootRoutes />
     </NavigationContainer>
   );
 }
