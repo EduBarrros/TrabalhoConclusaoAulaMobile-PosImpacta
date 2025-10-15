@@ -4,10 +4,11 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { TextField } from '../../components/textInput/textInput';
 import { Button } from '../../components/button/button';
 import { useLoginViewService } from './loginViewService';
+import Checkbox from 'expo-checkbox';
 
 export default function Login() {
 
-  const { sendToRegister } = useLoginViewService();
+  const ViewService = useLoginViewService();
 
   return (
     <SafeAreaView
@@ -34,10 +35,19 @@ export default function Login() {
         </Text>
       </View>
       <View style={{ flex: 1, paddingHorizontal: 24, gap: 24 }}>
-        <TextField placeholder='Email' />
-        <TextField placeholder='Senha' />
-        <Button text="Entrar" />
-        <TouchableOpacity onPress={sendToRegister} style={{ alignItems: 'center' }}>
+        <TextField placeholder='Email' value={ViewService.email} onChangeText={ViewService.setEmail}/>
+        <TextField placeholder='Senha' secureTextEntry value={ViewService.password} onChangeText={ViewService.setPassword}/>
+        <View style={{ flexDirection: 'row', alignItems: 'center'}}>
+          <Checkbox
+          value={ViewService.isChecked}
+          onValueChange={ViewService.setChecked}
+          color={true ? '#0D3B66' : undefined}
+          style={{ width: 20, height: 20, borderRadius: 4 }}
+        />
+          <Text style={{ marginLeft: 8, fontSize: 14, color: '#6B7280' }}>Salvar usuário para próximo</Text>
+        </View>
+        <Button text="Entrar" onPress={ViewService.userLogin}/>
+        <TouchableOpacity onPress={ViewService.sendToRegister} style={{ alignItems: 'center' }}>
           <Text style={{ fontWeight: 'bold', color: '#1E6091' }}>Não possui uma conta? {''}
             <Text style={{ textDecorationLine: 'underline' }}>Cadastre-se</Text>
           </Text>

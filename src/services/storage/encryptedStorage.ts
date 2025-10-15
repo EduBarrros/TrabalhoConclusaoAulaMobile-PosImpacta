@@ -27,3 +27,11 @@ export async function getSecureItem(key: string) {
     return null;
   }
 }
+
+export async function removeSecureItem(key: string) {
+  try {
+    await AsyncStorage.removeItem(key);
+  } catch (err) {
+    console.error("Erro ao remover item criptografado:", err);
+  }
+}

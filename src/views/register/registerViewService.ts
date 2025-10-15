@@ -22,6 +22,7 @@ export const useRegisterViewService = () => {
 
   const registerUser = async () => {
 
+    //Para limpar todos os dados do AsyncStorage
     if(email === 'limpar@limpar.com'){
       await AsyncStorage.clear()
       Notifier.showNotification({
@@ -56,7 +57,7 @@ export const useRegisterViewService = () => {
     if (!email.includes('@') || !email.includes('.')) {
       Notifier.showNotification({
         title: "Atenção!",
-        description: "Por favor, insira um email válido.",
+        description: "Por favor, insira um e-mail válido.",
         duration: 4000,
         showAnimationDuration: 800,
       });
@@ -73,8 +74,13 @@ export const useRegisterViewService = () => {
     const users: User[] = await getSecureItem('users') || [];
 
     if (users.find(user => user.email === email)) {
-      console.log('Email já cadastrado');
-      throw new Error('Email já cadastrado');
+      Notifier.showNotification({
+        title: "Atenção!",
+        description: "Email já cadastrado. Por favor, use outro e-mail.",
+        duration: 4000,
+        showAnimationDuration: 800,
+      });
+      return;
     }
 
     await setSecureItem('users', [...users, userData]);

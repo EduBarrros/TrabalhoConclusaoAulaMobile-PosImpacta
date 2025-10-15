@@ -15,7 +15,7 @@ export const Button = ({ text, onPress, type = 'primary' }: ButtonProps) => {
       activeOpacity={0.8}
       style={{
         height: 48,
-        borderRadius: 12,
+        borderRadius: 16,
         alignItems: 'center',
         justifyContent: 'center',
         marginTop: 16,
