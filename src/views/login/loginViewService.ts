@@ -30,7 +30,6 @@ export const useLoginViewService = () => {
         }));
     };
 
-
     const userLogin = async () => {
         const users: User[] = await getSecureItem('users') || [];
 
@@ -44,16 +43,6 @@ export const useLoginViewService = () => {
                 await removeSecureItem('lastUser');
             }
 
-            Notifier.showNotification({
-                title: `Bem-vindo, ${user.name}!`,
-                description: "Login realizado com sucesso.",
-                duration: 4000,
-                showAnimationDuration: 800,
-                componentProps: {
-                    titleStyle: { color: '#007BFF' },
-                    containerStyle: { borderColor: '#007BFF', borderWidth: 1, borderRadius: 8 },
-                },
-            });
             navigation.dispatch(CommonActions.reset({
                 index: 0,
                 routes: [{ name: 'App', params: { screen: 'Home' } }],

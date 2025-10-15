@@ -1,4 +1,3 @@
-// storageService.ts
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import CryptoJS from "crypto-js";
 import Constants from "expo-constants";

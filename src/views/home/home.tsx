@@ -8,11 +8,10 @@ export default function Home() {
     <SafeAreaView
       style={{
         flex: 1,
-        backgroundColor: '#F9FAFB',
-        paddingHorizontal: 16
+        backgroundColor: '#0D3B66',
       }}
     >
-      <View style={{ borderWidth: 1, borderColor: '#E5E7EB', borderRadius: 16, padding: 16, marginVertical: 16, boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)' }}>
+      <View style={{ backgroundColor: '#F9FAFB',borderBottomLeftRadius: 24, borderBottomRightRadius: 24, padding: 16, boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)', marginTop: -50, paddingTop: 60 }}>
         <Text style={{ fontSize: 24, fontWeight: 'bold', marginBottom: 8, color: '#0D3B66' }}>
           Olá, Eduardo!
         </Text>
@@ -33,7 +32,7 @@ export default function Home() {
             <Text style={{ fontSize: 46 }}>
               🔓
             </Text>
-            <Text style={{ textAlign: 'center', color: '#6B7280', marginTop: 16, fontSize: 18 }}>
+            <Text style={{ textAlign: 'center', color: '#9dbdddff', marginTop: 16, fontSize: 18 }}>
               Nenhuma senha segura cadastrada.
             </Text>
           </View>
