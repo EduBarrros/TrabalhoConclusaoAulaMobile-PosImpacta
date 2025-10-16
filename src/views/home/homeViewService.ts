@@ -1,8 +1,12 @@
+import React from "react";
 import { CommonActions, useNavigation } from "@react-navigation/native";
+
 
 export const useHomeViewService = () => {
 
     const navigation = useNavigation();
+
+    const [showModal, setShowModal] = React.useState(false);
 
     const sendToRegister = () => {
         navigation.dispatch(CommonActions.reset({
@@ -11,5 +15,5 @@ export const useHomeViewService = () => {
         }));
     };
 
-    return { sendToRegister };
+    return { sendToRegister, showModal, setShowModal };
 };
