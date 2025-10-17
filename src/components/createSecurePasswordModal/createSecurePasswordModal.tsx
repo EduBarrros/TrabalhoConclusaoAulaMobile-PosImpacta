@@ -1,7 +1,21 @@
 import React, { useEffect, useRef } from 'react';
-import { Animated, Modal, Pressable, Text, View } from 'react-native';
+import { Animated, Modal, Text, View } from 'react-native';
+import { TextField } from '../textField/textField';
+import { Button } from '../button/button';
 
-export const CreateSecurePasswordModal = ({ visible, onSubmit, onClose }: { visible: boolean, onSubmit: () => void, onClose: () => void }) => {
+interface CreateSecurePasswordModalProps {
+  visible: boolean;
+  onSubmit: () => void;
+  onClose: () => void;
+  nickname?: string;
+  password?: string;
+  confirmPassword?: string;
+  setNickName?: (text: string) => void;
+  setPassword?: (text: string) => void;
+  setConfirmPassword?: (text: string) => void;
+}
+
+export const CreateSecurePasswordModal = ({ visible, onSubmit, onClose, nickname, setNickName, password, setPassword, confirmPassword, setConfirmPassword }: CreateSecurePasswordModalProps) => {
   const fadeAnim = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
@@ -28,24 +42,36 @@ export const CreateSecurePasswordModal = ({ visible, onSubmit, onClose }: { visi
         style={{
           flex: 1,
           justifyContent: 'flex-end',
-          backgroundColor: fadeAnim.interpolate({
-            inputRange: [0, 1],
-            outputRange: ['rgba(0,0,0,0)', 'rgba(0,0,0,0.5)'],
-          }),
+          boxShadow: '0 -2px 4px rgba(0, 0, 0, 0.2)',
         }}
       >
         <View
           style={{
-            backgroundColor: '#fff',
+            backgroundColor: '#F9FAFB',
             padding: 24,
             borderTopLeftRadius: 24,
             borderTopRightRadius: 24,
+            gap: 16,
           }}
         >
-          <Text>Modal para cadastro de senha segura</Text>
-          <Pressable onPress={onClose} style={{ marginTop: 16 }}>
-            <Text style={{ color: '#0D3B66', fontWeight: 'bold' }}>Fechar</Text>
-          </Pressable>
+          <View style={{backgroundColor: 'grey', height: 6, width: 50, borderRadius: 4, marginHorizontal: '40%'}}/>
+          <Text style={{ fontWeight: 'bold', color: '#0D3B66', fontSize: 18, textAlign: 'center', marginBottom: 16}}>Cadastro de senha segura</Text>
+          <Text style={{ color: '#0D3B66', fontWeight: '500' }}>
+            Apelido para a senha segura
+          </Text>
+          <TextField placeholder='Digite o apelido' value={nickname} onChangeText={setNickName}/>
+          <Text style={{ color: '#0D3B66', fontWeight: '500' }}>
+            Senha segura
+          </Text>
+          <TextField placeholder='Digite a senha' value={password} onChangeText={setPassword} secureTextEntry/>
+          <Text style={{ color: '#0D3B66', fontWeight: '500' }}>
+            Confirme a senha segura
+          </Text>
+          <TextField placeholder='Confirme a senha' value={confirmPassword} onChangeText={setConfirmPassword} secureTextEntry/>
+          <View>
+            <Button text='Cadastrar' onPress={onSubmit}/>
+            <Button text='Cancelar' onPress={onClose} type='secondary' />
+          </View>
         </View>
       </Animated.View>
     </Modal>

@@ -4,13 +4,15 @@ interface ButtonProps {
   text: string;
   onPress?: () => void;
   type?: 'primary' | 'secondary';
+  disabled?: boolean;
 }
 
-export const Button = ({ text, onPress, type = 'primary' }: ButtonProps) => {
+export const Button = ({ text, onPress, type = 'primary', disabled = false }: ButtonProps) => {
   const isPrimary = type === 'primary';
 
   return (
     <TouchableOpacity
+      disabled={disabled}
       onPress={onPress}
       activeOpacity={0.8}
       style={{

@@ -10,7 +10,7 @@ export default function App() {
       <StatusBar
         barStyle="dark-content"
       />
-      <NotifierWrapper translucentStatusBar>
+      <NotifierWrapper translucentStatusBar useRNScreensOverlay>
         <NavigationContainer>
           <RootRoutes />
         </NavigationContainer>

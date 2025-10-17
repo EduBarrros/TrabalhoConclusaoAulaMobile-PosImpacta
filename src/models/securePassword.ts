@@ -1,6 +1,6 @@
-export interface User {
+export interface SecurePassword {
     id: string;
+    userId: string;
     name: string;
-    email: string;
     password: string;
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { TextField } from '../../components/textInput/textInput';
+import { TextField } from '../../components/textField/textField';
 import { Button } from '../../components/button/button';
 import { useLoginViewService } from './loginViewService';
 import Checkbox from 'expo-checkbox';
