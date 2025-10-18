@@ -17,8 +17,6 @@ interface RevealSecurePasswordModalProps {
 export const RevealSecurePasswordModal = ({ visible, onSubmit, onClose, password, setPassword, authenticated, securePasswordData }: RevealSecurePasswordModalProps) => {
     const fadeAnim = useRef(new Animated.Value(0)).current;
 
-    console.log('RevealSecurePasswordModal rendered with visible:', visible, 'authenticated:', authenticated, 'securePasswordData:', securePasswordData);
-
     useEffect(() => {
         if (visible) {
             fadeAnim.setValue(0);

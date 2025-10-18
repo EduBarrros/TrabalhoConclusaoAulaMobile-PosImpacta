@@ -2,7 +2,7 @@ import { CommonActions, useNavigation } from "@react-navigation/native";
 import React from "react";
 import { User } from "../../models/user";
 import { getSecureItem, removeSecureItem, setSecureItem } from "../../services/storage/encryptedStorage";
-import { Notifier, NotifierComponents } from "react-native-notifier";
+import { Notifier } from "react-native-notifier";
 
 export const useLoginViewService = () => {
 

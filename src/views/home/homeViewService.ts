@@ -33,23 +33,43 @@ export const useHomeViewService = () => {
     };
 
     const getTotalSecurePasswords = async () => {
-        const securePasswords: SecurePassword[] = await getSecureItem('SecurePassword') || [];
+        try {
+            const securePasswords: SecurePassword[] = await getSecureItem('SecurePassword') || [];
 
-        const selectedUserId = await getSecureItem('selectedUserId');
+            const selectedUserId = await getSecureItem('selectedUserId');
 
-        const users = securePasswords.filter(sp => sp.userId === selectedUserId);
+            const users = securePasswords.filter(sp => sp.userId === selectedUserId);
 
-        setTotalSecurePasswords(users.length);
+            setTotalSecurePasswords(users.length);
+        } catch (error) {
+            Notifier.showNotification({
+                title: "Erro",
+                description: "Falha ao obter o total de senhas seguras.",
+                duration: 4000,
+                showAnimationDuration: 800,
+            });
+            console.error('getTotalSecurePasswords error:', error);
+        }
     };
 
     const getUserSecurePasswords = async () => {
-        const securePasswords: SecurePassword[] = await getSecureItem('SecurePassword') || [];
+        try {
+            const securePasswords: SecurePassword[] = await getSecureItem('SecurePassword') || [];
 
-        const selectedUserId = await getSecureItem('selectedUserId');
+            const selectedUserId = await getSecureItem('selectedUserId');
 
-        const userSecurePasswords = securePasswords.filter(sp => sp.userId === selectedUserId);
+            const userSecurePasswords = securePasswords.filter(sp => sp.userId === selectedUserId);
 
-        setUserSecurePasswords(userSecurePasswords);
+            setUserSecurePasswords(userSecurePasswords);
+        } catch (error) {
+            Notifier.showNotification({
+                title: "Erro",
+                description: "Falha ao obter as senhas do usuário.",
+                duration: 4000,
+                showAnimationDuration: 800,
+            });
+            console.error('getUserSecurePasswords error:', error);
+        }
     }
 
     const createSecurePassword = async () => {
@@ -63,35 +83,45 @@ export const useHomeViewService = () => {
             return;
         }
 
-        const selectedUserId = await getSecureItem('selectedUserId');
+        try {
+            const selectedUserId = await getSecureItem('selectedUserId');
 
-        const newSecurePassword: SecurePassword = {
-            id: (Math.random() * 100000).toString(),
-            userId: selectedUserId,
-            name: nickname,
-            password: password
-        };
+            const newSecurePassword: SecurePassword = {
+                id: (Math.random() * 100000).toString(),
+                userId: selectedUserId,
+                name: nickname,
+                password: password
+            };
 
-        const securePasswords: SecurePassword[] = await getSecureItem('SecurePassword') || [];
+            const securePasswords: SecurePassword[] = await getSecureItem('SecurePassword') || [];
 
-        securePasswords.push(newSecurePassword);
+            securePasswords.push(newSecurePassword);
 
-        await setSecureItem('SecurePassword', securePasswords);
+            await setSecureItem('SecurePassword', securePasswords);
 
-        Notifier.showNotification({
-            title: "Sucesso!",
-            description: "Senha segura criada com sucesso.",
-            duration: 4000,
-            showAnimationDuration: 800,
-        });
+            Notifier.showNotification({
+                title: "Sucesso!",
+                description: "Senha segura criada com sucesso.",
+                duration: 4000,
+                showAnimationDuration: 800,
+            });
 
-        setShowCreateModal(false);
-        setNickname('');
-        setPassword('');
-        setConfirmPassword('');
+            setShowCreateModal(false);
+            setNickname('');
+            setPassword('');
+            setConfirmPassword('');
 
-        getTotalSecurePasswords();
-        getUserSecurePasswords();
+            getTotalSecurePasswords();
+            getUserSecurePasswords();
+        } catch (error) {
+            Notifier.showNotification({
+                title: "Erro",
+                description: "Não foi possível criar a senha segura.",
+                duration: 4000,
+                showAnimationDuration: 800,
+            });
+            console.error('createSecurePassword error:', error);
+        }
     };
 
     const cancelCreateSecurePassword = () => {
@@ -102,37 +132,55 @@ export const useHomeViewService = () => {
     }
 
     const logout = async () => {
+        try {
+            await setSecureItem('selectedUserId', null);
 
-        await setSecureItem('selectedUserId', null);
-
-        navigation.dispatch(CommonActions.reset({
-            index: 0,
-            routes: [{ name: 'Auth', params: { screen: 'Login' } }],
-        }));
-    }
-
-    const RevealSecurePassword = async () => {
-        const users = await getSecureItem('users') || [];
-
-        const selectedUserId = await getSecureItem('selectedUserId');
-
-        const currentUser = users.find((user: any) => user.id === selectedUserId);
-
-        if (currentUser?.password !== revealPasswordAuth) {
+            navigation.dispatch(CommonActions.reset({
+                index: 0,
+                routes: [{ name: 'Auth', params: { screen: 'Login' } }],
+            }));
+        } catch (error) {
             Notifier.showNotification({
-                title: "Atenção!",
-                description: "Senha de acesso incorreta.",
+                title: "Erro",
+                description: "Falha ao efetuar logout.",
                 duration: 4000,
                 showAnimationDuration: 800,
             });
-            return;
+            console.error('logout error:', error);
         }
+    }
 
-        setShowSecurePassword(true);
+    const RevealSecurePassword = async () => {
+        try {
+            const users = await getSecureItem('users') || [];
+
+            const selectedUserId = await getSecureItem('selectedUserId');
+
+            const currentUser = users.find((user: any) => user.id === selectedUserId);
+
+            if (currentUser?.password !== revealPasswordAuth) {
+                Notifier.showNotification({
+                    title: "Atenção!",
+                    description: "Senha de acesso incorreta.",
+                    duration: 4000,
+                    showAnimationDuration: 800,
+                });
+                return;
+            }
+
+            setShowSecurePassword(true);
+        } catch (error) {
+            Notifier.showNotification({
+                title: "Erro",
+                description: "Não foi possível verificar a senha de acesso.",
+                duration: 4000,
+                showAnimationDuration: 800,
+            });
+            console.error('RevealSecurePassword error:', error);
+        }
     }
 
     const revealHandler = (securePassword: SecurePassword) => {
-        console.log('revealHandler called with:', securePassword);
         setSelectedSecurePasswordData(securePassword);
         setShowRevealModal(true);
         setShowSecurePassword(false);
