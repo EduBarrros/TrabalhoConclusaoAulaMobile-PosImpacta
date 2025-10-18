@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { Animated, Modal, Text, View } from 'react-native';
 import { TextField } from '../textField/textField';
 import { Button } from '../button/button';
+import { SecurePassword } from '../../models/securePassword';
 
 interface RevealSecurePasswordModalProps {
     visible: boolean;
@@ -9,10 +10,14 @@ interface RevealSecurePasswordModalProps {
     onClose: () => void;
     password?: string;
     setPassword?: (text: string) => void;
+    authenticated?: boolean;
+    securePasswordData?: SecurePassword | null;
 }
 
-export const RevealSecurePasswordModal = ({ visible, onSubmit, onClose, password, setPassword }: RevealSecurePasswordModalProps) => {
+export const RevealSecurePasswordModal = ({ visible, onSubmit, onClose, password, setPassword, authenticated, securePasswordData }: RevealSecurePasswordModalProps) => {
     const fadeAnim = useRef(new Animated.Value(0)).current;
+
+    console.log('RevealSecurePasswordModal rendered with visible:', visible, 'authenticated:', authenticated, 'securePasswordData:', securePasswordData);
 
     useEffect(() => {
         if (visible) {
@@ -54,16 +59,39 @@ export const RevealSecurePasswordModal = ({ visible, onSubmit, onClose, password
                         gap: 16,
                     }}
                 >
-                    <View style={{ backgroundColor: 'grey', height: 6, width: 50, borderRadius: 4, marginHorizontal: '40%' }} />
-                    <Text style={{ fontWeight: 'bold', color: '#0D3B66', fontSize: 18, textAlign: 'center', marginBottom: 16 }}>Cadastro de senha segura</Text>
-                    <Text style={{ color: '#0D3B66', fontWeight: '500' }}>
-                        Visualizar senha segura
-                    </Text>
-                    <TextField placeholder='Digite sua senha de acesso para vizualizar' value={password} onChangeText={setPassword} secureTextEntry/>
-                    <View>
-                        <Button text='Revelar' onPress={onSubmit} />
-                        <Button text='Cancelar' onPress={onClose} type='secondary' />
-                    </View>
+                    {
+                        !authenticated
+                            ?
+                            <>
+                                <View style={{ backgroundColor: 'grey', height: 6, width: 50, borderRadius: 4, marginHorizontal: '40%' }} />
+                                <Text style={{ fontWeight: 'bold', color: '#0D3B66', fontSize: 18, textAlign: 'center', marginBottom: 16 }}>Visualizar senha segura</Text>
+                                <Text style={{ color: '#0D3B66', fontWeight: '500' }}>
+                                    Senha de acesso
+                                </Text>
+                                <TextField placeholder='Digite sua senha de acesso para vizualizar' value={password} onChangeText={setPassword} secureTextEntry />
+                                <View>
+                                    <Button text='Visualizar' onPress={onSubmit} />
+                                    <Button text='Cancelar' onPress={onClose} type='secondary' />
+                                </View>
+                            </>
+                            :
+                            <>
+                                <Text style={{ fontWeight: 'bold', color: '#0D3B66', fontSize: 18, textAlign: 'center', marginBottom: 16 }}>Senha segura</Text>
+                                <Text style={{ color: '#0D3B66', fontWeight: '500' }}>
+                                    Apelido:
+                                </Text>
+                                <Text style={{ fontSize: 24, fontWeight: 'bold', color: '#0D3B66' }}>
+                                    {securePasswordData?.name}
+                                </Text>
+                                <Text style={{ color: '#0D3B66', fontWeight: '500' }}>
+                                    Senha:
+                                </Text>
+                                <Text style={{ fontSize: 24, fontWeight: 'bold', color: '#0D3B66'}}>
+                                    {securePasswordData?.password}
+                                </Text>
+                                <Button text='Fechar' onPress={onClose}/>
+                            </>
+                    }
                 </View>
             </Animated.View>
         </Modal>

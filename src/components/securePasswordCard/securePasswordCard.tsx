@@ -1,14 +1,15 @@
 import { Text, Pressable, View } from "react-native";
 import Ionicons from '@expo/vector-icons/Ionicons';
 import Entypo from '@expo/vector-icons/Entypo';
+import { SecurePassword } from "../../models/securePassword";
 
 interface SecurePasswordCardProps {
-    SecurePasswordName: string;
+    securePasswordData: SecurePassword;
     onReveal?: () => void;
     onOptions?: () => void;
 }
 
-export const SecurePasswordCard = ({ SecurePasswordName, onReveal, onOptions }: SecurePasswordCardProps) => {
+export const SecurePasswordCard = ({ securePasswordData, onReveal, onOptions }: SecurePasswordCardProps) => {
     return (
         <View style={{
             backgroundColor: '#F9FAFB',
@@ -25,7 +26,7 @@ export const SecurePasswordCard = ({ SecurePasswordName, onReveal, onOptions }: 
             paddingRight: 16,
         }}>
             <Text style={{ fontSize: 18, color: '#0D3B66' }}>
-                {SecurePasswordName}
+                {securePasswordData.name}
             </Text>
             <View style={{ flexDirection: 'row', gap: 24 }}>
                 <Pressable

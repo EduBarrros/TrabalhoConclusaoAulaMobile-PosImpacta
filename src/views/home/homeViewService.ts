@@ -16,6 +16,9 @@ export const useHomeViewService = () => {
     const [totalSecurePasswords, setTotalSecurePasswords] = React.useState(0);
     const [userSecurePasswords, setUserSecurePasswords] = React.useState<SecurePassword[]>([]);
     const [showRevealModal, setShowRevealModal] = React.useState(false);
+    const [revealPasswordAuth, setRevealPasswordAuth] = React.useState<string>('');
+    const [showSecurePassword, setShowSecurePassword] = React.useState<boolean>(false);
+    const [selectedSecurePasswordData, setSelectedSecurePasswordData] = React.useState<SecurePassword | null>(null);
 
     React.useEffect(() => {
         getTotalSecurePasswords();
@@ -32,9 +35,9 @@ export const useHomeViewService = () => {
     const getTotalSecurePasswords = async () => {
         const securePasswords: SecurePassword[] = await getSecureItem('SecurePassword') || [];
 
-        const selectedUser = await getSecureItem('selectedUser');
+        const selectedUserId = await getSecureItem('selectedUserId');
 
-        const users = securePasswords.filter(sp => sp.userId === selectedUser.id);
+        const users = securePasswords.filter(sp => sp.userId === selectedUserId);
 
         setTotalSecurePasswords(users.length);
     };
@@ -42,9 +45,9 @@ export const useHomeViewService = () => {
     const getUserSecurePasswords = async () => {
         const securePasswords: SecurePassword[] = await getSecureItem('SecurePassword') || [];
 
-        const selectedUser = await getSecureItem('selectedUser');
+        const selectedUserId = await getSecureItem('selectedUserId');
 
-        const userSecurePasswords = securePasswords.filter(sp => sp.userId === selectedUser.id);
+        const userSecurePasswords = securePasswords.filter(sp => sp.userId === selectedUserId);
 
         setUserSecurePasswords(userSecurePasswords);
     }
@@ -60,11 +63,11 @@ export const useHomeViewService = () => {
             return;
         }
 
-        const selectedUser = await getSecureItem('selectedUser');
+        const selectedUserId = await getSecureItem('selectedUserId');
 
         const newSecurePassword: SecurePassword = {
             id: (Math.random() * 100000).toString(),
-            userId: selectedUser.id,
+            userId: selectedUserId,
             name: nickname,
             password: password
         };
@@ -100,12 +103,47 @@ export const useHomeViewService = () => {
 
     const logout = async () => {
 
-        await setSecureItem('selectedUser', null);
+        await setSecureItem('selectedUserId', null);
 
         navigation.dispatch(CommonActions.reset({
             index: 0,
             routes: [{ name: 'Auth', params: { screen: 'Login' } }],
         }));
+    }
+
+    const RevealSecurePassword = async () => {
+        const users = await getSecureItem('users') || [];
+
+        const selectedUserId = await getSecureItem('selectedUserId');
+
+        const currentUser = users.find((user: any) => user.id === selectedUserId);
+
+        if (currentUser?.password !== revealPasswordAuth) {
+            Notifier.showNotification({
+                title: "Atenção!",
+                description: "Senha de acesso incorreta.",
+                duration: 4000,
+                showAnimationDuration: 800,
+            });
+            return;
+        }
+
+        setShowSecurePassword(true);
+    }
+
+    const revealHandler = (securePassword: SecurePassword) => {
+        console.log('revealHandler called with:', securePassword);
+        setSelectedSecurePasswordData(securePassword);
+        setShowRevealModal(true);
+        setShowSecurePassword(false);
+        setRevealPasswordAuth('');
+    }
+
+    const closeRevealHandler = () => {
+        setShowRevealModal(false);
+        setShowSecurePassword(false);
+        setRevealPasswordAuth('');
+        setSelectedSecurePasswordData(null);
     }
 
     return {
@@ -124,6 +162,13 @@ export const useHomeViewService = () => {
         userSecurePasswords,
         logout,
         showRevealModal,
-        setShowRevealModal
+        setShowRevealModal,
+        revealPasswordAuth,
+        setRevealPasswordAuth,
+        RevealSecurePassword,
+        showSecurePassword,
+        revealHandler,
+        selectedSecurePasswordData,
+        closeRevealHandler
     };
 };

@@ -44,7 +44,7 @@ export default function Home() {
         data={ViewService.userSecurePasswords}
         style={{ marginTop: 24 }}
         keyExtractor={(_, index) => index.toString()}
-        renderItem={({ item }: { item: SecurePassword }) => <SecurePasswordCard SecurePasswordName={item.name} onReveal={() => ViewService.setShowRevealModal(true)} onOptions={() => null}/>}
+        renderItem={({ item }: { item: SecurePassword }) => <SecurePasswordCard securePasswordData={item} onReveal={() => ViewService.revealHandler(item)} onOptions={() => null}/>}
         contentContainerStyle={{ flexGrow: 1 }}
         ListEmptyComponent={() => (
           <View style={{ flex: 1, alignItems: 'center', paddingTop: '50%' }}>
@@ -69,9 +69,13 @@ export default function Home() {
         setConfirmPassword={ViewService.setConfirmPassword}
       />
       <RevealSecurePasswordModal
-        onClose={() => ViewService.setShowRevealModal(false)}
-        onSubmit={() => null}
+        onClose={ViewService.closeRevealHandler}
+        onSubmit={ViewService.RevealSecurePassword}
         visible={ViewService.showRevealModal}
+        password={ViewService.revealPasswordAuth}
+        setPassword={ViewService.setRevealPasswordAuth}
+        authenticated={ViewService.showSecurePassword}
+        securePasswordData={ViewService.selectedSecurePasswordData}
       />
     </SafeAreaView>
   );

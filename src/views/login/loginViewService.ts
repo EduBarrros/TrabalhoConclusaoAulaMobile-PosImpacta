@@ -43,7 +43,7 @@ export const useLoginViewService = () => {
                 await removeSecureItem('lastUser');
             }
 
-            await setSecureItem('selectedUser', user);
+            await setSecureItem('selectedUserId', user.id);
 
             navigation.dispatch(CommonActions.reset({
                 index: 0,
