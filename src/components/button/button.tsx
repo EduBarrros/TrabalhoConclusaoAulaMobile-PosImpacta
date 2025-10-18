@@ -1,4 +1,4 @@
-import { Text, TouchableOpacity } from "react-native";
+import { Pressable, Text } from "react-native";
 
 interface ButtonProps {
   text: string;
@@ -11,11 +11,10 @@ export const Button = ({ text, onPress, type = 'primary', disabled = false }: Bu
   const isPrimary = type === 'primary';
 
   return (
-    <TouchableOpacity
+    <Pressable
       disabled={disabled}
       onPress={onPress}
-      activeOpacity={0.8}
-      style={{
+      style={({pressed}) => [{
         height: 48,
         borderRadius: 16,
         alignItems: 'center',
@@ -27,7 +26,8 @@ export const Button = ({ text, onPress, type = 'primary', disabled = false }: Bu
         shadowOpacity: 0.15,
         shadowRadius: 4,
         elevation: 2,
-      }}
+        opacity: pressed ? 0.7 : 1,
+      }]}
     >
       <Text
         style={{
@@ -38,6 +38,6 @@ export const Button = ({ text, onPress, type = 'primary', disabled = false }: Bu
       >
         {text}
       </Text>
-    </TouchableOpacity>
+    </Pressable>
   );
 };

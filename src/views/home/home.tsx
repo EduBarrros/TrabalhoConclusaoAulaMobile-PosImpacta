@@ -5,6 +5,9 @@ import { Button } from '../../components/button/button';
 import { useHomeViewService } from './homeViewService';
 import { CreateSecurePasswordModal } from '../../components/createSecurePasswordModal/createSecurePasswordModal';
 import { SecurePassword } from '../../models/securePassword';
+import { SecurePasswordCard } from '../../components/securePasswordCard/securePasswordCard';
+import Ionicons from '@expo/vector-icons/Ionicons';
+import { RevealSecurePasswordModal } from '../../components/revealSecurePasswordModal/revealSecurePasswordModal';
 
 export default function Home() {
 
@@ -18,20 +21,30 @@ export default function Home() {
       }}
     >
       <View style={{ backgroundColor: '#F9FAFB', borderBottomLeftRadius: 24, borderBottomRightRadius: 24, padding: 16, boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)', marginTop: -50, paddingTop: 60 }}>
-        <Text style={{ fontSize: 24, fontWeight: 'bold', marginBottom: 8, color: '#0D3B66' }}>
-          Olá, Eduardo!
-        </Text>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
+          <Text style={{ fontSize: 24, fontWeight: 'bold', marginBottom: 8, color: '#0D3B66' }}>
+            Olá, Eduardo!
+          </Text>
+          <Pressable
+            style={({ pressed }) => [{
+              opacity: pressed ? 0.7 : 1,
+            }]}
+            onPress={ViewService.logout}>
+            <Ionicons name="log-out-outline" size={32} color="#0D3B66" />
+          </Pressable>
+        </View>
         <Text style={{ fontSize: 64, fontWeight: 'bold', color: '#0D3B66' }}>
           {ViewService.totalSecurePasswords} <Text style={{ fontSize: 24, fontWeight: 'normal' }}>
             Senhas seguras
           </Text>
         </Text>
-        <Button text='Adicionar nova senha segura' onPress={() => ViewService.setShowModal(true)} />
+        <Button text='Adicionar nova senha segura' onPress={() => ViewService.setShowCreateModal(true)} />
       </View>
       <FlatList
         data={ViewService.userSecurePasswords}
+        style={{ marginTop: 24 }}
         keyExtractor={(_, index) => index.toString()}
-        renderItem={({item}: { item: SecurePassword }) => <Text>{item.name}</Text>}
+        renderItem={({ item }: { item: SecurePassword }) => <SecurePasswordCard SecurePasswordName={item.name} onReveal={() => ViewService.setShowRevealModal(true)} onOptions={() => null}/>}
         contentContainerStyle={{ flexGrow: 1 }}
         ListEmptyComponent={() => (
           <View style={{ flex: 1, alignItems: 'center', paddingTop: '50%' }}>
@@ -45,7 +58,7 @@ export default function Home() {
         )}
       />
       <CreateSecurePasswordModal
-        visible={ViewService.showModal}
+        visible={ViewService.showCreateModal}
         onClose={ViewService.cancelCreateSecurePassword}
         onSubmit={ViewService.createSecurePassword}
         nickname={ViewService.nickname}
@@ -54,6 +67,11 @@ export default function Home() {
         setPassword={ViewService.setPassword}
         confirmPassword={ViewService.confirmPassword}
         setConfirmPassword={ViewService.setConfirmPassword}
+      />
+      <RevealSecurePasswordModal
+        onClose={() => ViewService.setShowRevealModal(false)}
+        onSubmit={() => null}
+        visible={ViewService.showRevealModal}
       />
     </SafeAreaView>
   );

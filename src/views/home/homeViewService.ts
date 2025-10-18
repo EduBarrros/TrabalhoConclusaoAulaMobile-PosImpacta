@@ -9,12 +9,13 @@ export const useHomeViewService = () => {
 
     const navigation = useNavigation();
 
-    const [showModal, setShowModal] = React.useState(false);
+    const [showCreateModal, setShowCreateModal] = React.useState(false);
     const [nickname, setNickname] = React.useState('');
     const [password, setPassword] = React.useState('');
     const [confirmPassword, setConfirmPassword] = React.useState('');
     const [totalSecurePasswords, setTotalSecurePasswords] = React.useState(0);
     const [userSecurePasswords, setUserSecurePasswords] = React.useState<SecurePassword[]>([]);
+    const [showRevealModal, setShowRevealModal] = React.useState(false);
 
     React.useEffect(() => {
         getTotalSecurePasswords();
@@ -49,7 +50,7 @@ export const useHomeViewService = () => {
     }
 
     const createSecurePassword = async () => {
-        if(!nickname || !password || !confirmPassword) {
+        if (!nickname || !password || !confirmPassword) {
             Notifier.showNotification({
                 title: "Atenção!",
                 description: "Preencha todos os campos.",
@@ -81,7 +82,7 @@ export const useHomeViewService = () => {
             showAnimationDuration: 800,
         });
 
-        setShowModal(false);
+        setShowCreateModal(false);
         setNickname('');
         setPassword('');
         setConfirmPassword('');
@@ -91,11 +92,38 @@ export const useHomeViewService = () => {
     };
 
     const cancelCreateSecurePassword = () => {
-        setShowModal(false);
+        setShowCreateModal(false);
         setNickname('');
         setPassword('');
         setConfirmPassword('');
     }
 
-    return { sendToRegister, showModal, setShowModal, totalSecurePasswords, nickname, setNickname, password, setPassword, confirmPassword, setConfirmPassword, cancelCreateSecurePassword, createSecurePassword, userSecurePasswords};
+    const logout = async () => {
+
+        await setSecureItem('selectedUser', null);
+
+        navigation.dispatch(CommonActions.reset({
+            index: 0,
+            routes: [{ name: 'Auth', params: { screen: 'Login' } }],
+        }));
+    }
+
+    return {
+        sendToRegister,
+        showCreateModal,
+        setShowCreateModal,
+        totalSecurePasswords,
+        nickname,
+        setNickname,
+        password,
+        setPassword,
+        confirmPassword,
+        setConfirmPassword,
+        cancelCreateSecurePassword,
+        createSecurePassword,
+        userSecurePasswords,
+        logout,
+        showRevealModal,
+        setShowRevealModal
+    };
 };

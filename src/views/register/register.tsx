@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { Text, Pressable, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { TextField } from '../../components/textField/textField';
 import { Button } from '../../components/button/button';
@@ -29,11 +29,17 @@ export default function Register() {
                 <TextField placeholder='Email' value={ViewService.email} onChangeText={ViewService.setEmail} />
                 <TextField placeholder='Senha' value={ViewService.password} onChangeText={ViewService.setPassword} secureTextEntry />
                 <Button text="Cadastrar" onPress={ViewService.registerUser} />
-                <TouchableOpacity style={{ alignItems: 'center' }} onPress={ViewService.sendToLogin}>
+                <Pressable
+                    style={({ pressed }) => [{
+                        opacity: pressed ? 0.7 : 1,
+                        alignItems: 'center'
+                    }]}
+                    onPress={ViewService.sendToLogin}
+                >
                     <Text style={{ color: '#1E6091', fontWeight: 'bold' }}>Já possui uma conta? {''}
                         <Text style={{ textDecorationLine: 'underline' }}>Entrar</Text>
                     </Text>
-                </TouchableOpacity>
+                </Pressable>
                 <Text style={{ textAlign: 'center', marginTop: 16, color: '#6B7280' }}>
                     Ao se cadastrar, você concorda com nossos Termos de Serviço e Política de Privacidade.
                 </Text>

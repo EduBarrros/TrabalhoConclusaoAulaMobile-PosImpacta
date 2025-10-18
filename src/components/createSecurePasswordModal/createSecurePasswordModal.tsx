@@ -43,6 +43,10 @@ export const CreateSecurePasswordModal = ({ visible, onSubmit, onClose, nickname
           flex: 1,
           justifyContent: 'flex-end',
           boxShadow: '0 -2px 4px rgba(0, 0, 0, 0.2)',
+          backgroundColor: fadeAnim.interpolate({
+            inputRange: [0, 1],
+            outputRange: ['rgba(0,0,0,0)', 'rgba(0,0,0,0.5)'],
+          }),
         }}
       >
         <View
@@ -54,22 +58,22 @@ export const CreateSecurePasswordModal = ({ visible, onSubmit, onClose, nickname
             gap: 16,
           }}
         >
-          <View style={{backgroundColor: 'grey', height: 6, width: 50, borderRadius: 4, marginHorizontal: '40%'}}/>
-          <Text style={{ fontWeight: 'bold', color: '#0D3B66', fontSize: 18, textAlign: 'center', marginBottom: 16}}>Cadastro de senha segura</Text>
+          <View style={{ backgroundColor: 'grey', height: 6, width: 50, borderRadius: 4, marginHorizontal: '40%' }} />
+          <Text style={{ fontWeight: 'bold', color: '#0D3B66', fontSize: 18, textAlign: 'center', marginBottom: 16 }}>Cadastro de senha segura</Text>
           <Text style={{ color: '#0D3B66', fontWeight: '500' }}>
             Apelido para a senha segura
           </Text>
-          <TextField placeholder='Digite o apelido' value={nickname} onChangeText={setNickName}/>
+          <TextField placeholder='Digite o apelido' value={nickname} onChangeText={setNickName} />
           <Text style={{ color: '#0D3B66', fontWeight: '500' }}>
             Senha segura
           </Text>
-          <TextField placeholder='Digite a senha' value={password} onChangeText={setPassword} secureTextEntry/>
+          <TextField placeholder='Digite a senha' value={password} onChangeText={setPassword} secureTextEntry />
           <Text style={{ color: '#0D3B66', fontWeight: '500' }}>
             Confirme a senha segura
           </Text>
-          <TextField placeholder='Confirme a senha' value={confirmPassword} onChangeText={setConfirmPassword} secureTextEntry/>
+          <TextField placeholder='Confirme a senha' value={confirmPassword} onChangeText={setConfirmPassword} secureTextEntry />
           <View>
-            <Button text='Cadastrar' onPress={onSubmit}/>
+            <Button text='Cadastrar' onPress={onSubmit} />
             <Button text='Cancelar' onPress={onClose} type='secondary' />
           </View>
         </View>

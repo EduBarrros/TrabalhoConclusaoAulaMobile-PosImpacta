@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { Text, Pressable, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Button } from '../../components/button/button';
 import { useWelcomeViewService } from './welcomeViewService';
@@ -73,11 +73,18 @@ export default function Welcome() {
           onPress={sendToLogin}
           type="secondary"
         />
-        <TouchableOpacity onPress={sendToRegister} style={{ marginTop: 24, alignItems: 'center' }}>
-          <Text style={{ fontWeight: 'bold', color: '#E2E8F0'}}>Não possui uma conta? {''}
+        <Pressable
+          onPress={sendToRegister}
+          style={({ pressed }) => [{
+            opacity: pressed ? 0.7 : 1,
+            marginTop: 24,
+            alignItems: 'center'
+          }]}
+        >
+          <Text style={{ fontWeight: 'bold', color: '#E2E8F0' }}>Não possui uma conta? {''}
             <Text style={{ textDecorationLine: 'underline' }}>Cadastre-se</Text>
           </Text>
-        </TouchableOpacity>
+        </Pressable>
       </View>
     </SafeAreaView>
   );
